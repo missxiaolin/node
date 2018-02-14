@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象测试</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 类的声明
+        function Animal(){
+            this.name = 'name'
+        }
+        // es6
+        class Animal2 {
+            constructor () {
+                this.name = 'name'
+            }
+        }
+        // 实例化对象
+        // console.log(new Animal())
+
+        // 借助构造函数实现继承
+        function Parent1 () {
+            this.name = 'parent1'
+        }
+        function Child1 () {
+            Parent1.call(this)
+            this.type = 'Child1'
+        }
+        console.log(new Child1())
+    </script>
+</body>
+</html>
