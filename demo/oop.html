@@ -35,11 +35,24 @@
         // console.log(new Child1())
 
         // 借助原型链实现继承
-        function Child2 () {
-            this.type = 'Child2'
+        // function Child2 () {
+        //     this.type = 'Child2'
+        // }
+        // Child2.prototype = new Parent()
+        // console.log(new Child2)
+
+        // 组合方式
+        function Child3 () {
+            Parent.call(this)
+            this.type = 'Child3'
+            this.play = [1]
         }
-        Child2.prototype = new Parent()
-        console.log(Child2)
+        Child3.prototype = new Parent() // 或者 Parent.prototype
+        var s1 = new Child3()
+        var s2 = new Child3()
+        s1.play.push(2)
+        console.log(s1)
+        console.log(s2)
     </script>
 </body>
 </html>
