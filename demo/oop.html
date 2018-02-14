@@ -22,14 +22,24 @@
         // console.log(new Animal())
 
         // 借助构造函数实现继承
-        function Parent1 () {
-            this.name = 'parent1'
+        function Parent () {
+            this.name = 'parent'
         }
-        function Child1 () {
-            Parent1.call(this)
-            this.type = 'Child1'
+        Parent.prototype.say = function() {
+            console.log('say')
         }
-        console.log(new Child1())
+        // function Child1 () {
+        //     Parent.call(this)
+        //     this.type = 'Child1'
+        // }
+        // console.log(new Child1())
+
+        // 借助原型链实现继承
+        function Child2 () {
+            this.type = 'Child2'
+        }
+        Child2.prototype = new Parent()
+        console.log(Child2)
     </script>
 </body>
 </html>
