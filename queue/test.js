@@ -4,6 +4,8 @@ import Queue from './index'
 const queue = new Queue();
 
 test('push', t => {
+  t.is(queue.front(), null)
+  t.is(queue.back(), null)
   queue.push('a')
   t.is(queue.front(), 'a')
 })
