@@ -2,11 +2,9 @@ interface QueueInterface {
     empty();
     size();
     push(value);
-    front();
-    back();
     pop();
 }
-class Queue implements QueueInterface {
+export class Queue implements QueueInterface {
 
     store = [];
 
@@ -38,9 +36,38 @@ class Queue implements QueueInterface {
     }
 
     pop() {
-        this.store.pop()
+        this.store.shift();
     }
 
 }
 
-export default Queue;
+export class Stack implements QueueInterface {
+
+    store = [];
+
+    empty() {
+        return this.store.length === 0;
+    }
+
+    size() {
+        return this.store.length;
+    }
+
+    push(value: any) {
+        this.store.push(value);
+    }
+
+    pop() {
+        this.store.pop();
+    }
+
+    top() {
+        if (this.empty()) {
+            return null;
+        }
+        const index = this.store.length - 1;
+        return this.store[index];
+    }
+
+}
+

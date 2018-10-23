@@ -27,8 +27,34 @@ var Queue = (function () {
         return this.store[index];
     };
     Queue.prototype.pop = function () {
-        this.store.pop();
+        this.store.shift();
     };
     return Queue;
 }());
-exports.default = Queue;
+exports.Queue = Queue;
+var Stack = (function () {
+    function Stack() {
+        this.store = [];
+    }
+    Stack.prototype.empty = function () {
+        return this.store.length === 0;
+    };
+    Stack.prototype.size = function () {
+        return this.store.length;
+    };
+    Stack.prototype.push = function (value) {
+        this.store.push(value);
+    };
+    Stack.prototype.pop = function () {
+        this.store.pop();
+    };
+    Stack.prototype.top = function () {
+        if (this.empty()) {
+            return null;
+        }
+        var index = this.store.length - 1;
+        return this.store[index];
+    };
+    return Stack;
+}());
+exports.Stack = Stack;
