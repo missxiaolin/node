@@ -4,10 +4,10 @@ class People {
         this.age = age
     }
     eat() {
-        alert(`${this.name} eat something`)
+        console.log(`${this.name} eat something`)
     }
     speak() {
-        alert(`My name is ${this.name}, age ${this.age}`)
+        console.log(`My name is ${this.name}, age ${this.age}`)
     }
 }
 

@@ -4,10 +4,10 @@ class People {
         this.age = age
     }
     eat() {
-        alert(`${this.name} eat something`)
+        console.log(`${this.name} eat something`)
     }
     speak() {
-        alert(`My name is ${this.name}, age ${this.age}`)
+        alconsole.logert(`My name is ${this.name}, age ${this.age}`)
     }
 }
 
@@ -17,7 +17,7 @@ class Student extends People {
         this.number = number
     }
     study() {
-        alert(`${this.name} study`)
+        console.log(`${this.name} study`)
     }
 }
 

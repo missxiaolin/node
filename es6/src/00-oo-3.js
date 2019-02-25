@@ -11,7 +11,7 @@ class A extends People {
         super(name)
     }
     saySomething() {
-        alert('I am A')
+        console.log('I am A')
     }
 }
 class B extends People {
@@ -19,7 +19,7 @@ class B extends People {
         super(name)
     }
     saySomething() {
-        alert('I am B')
+        console.log('I am B')
     }
 }
 let a = new A('a')
