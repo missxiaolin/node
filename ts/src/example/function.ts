@@ -18,4 +18,17 @@ addFun1 = (x: number, y: number): number => x + y
 // 函数默认值
 addFun1 = (x: number, y: number = 3): number => x + y
 
-// 操作符
+// 泛型
+const getArray = <T>(val: T, times: number = 5): T[] => {
+    return new Array(times).fill(val)
+}
+console.log(getArray<number>(123, 4))
+
+// 泛型继承
+interface ValWithLenght {
+    lenght: number
+}
+
+const getArray1 = <T extends ValWithLenght>(val: T, times: number = 5): T[] => {
+    return new Array(times).fill(val)
+}
