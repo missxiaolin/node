@@ -7,24 +7,24 @@ interface FileItem {
 }
 
 export = {
-    upload (key, name): Promise<void> {
+    upload(key, name): Promise<void> {
         return new Promise((resolve, reject) => {
             sql.query(
                 `INSERT INTO image (file_key, file_name) VALUES ("${key}", "upload_${name}")`,
                 (err, res) => {
-                    if (err) reject(err)
-                    else resolve(res)
-                }
+                    if (err) { reject(err) }
+                    else { resolve(res) }
+                },
             )
         })
     },
-    getList (): Promise<FileItem[]> {
+    getList(): Promise<FileItem[]> {
         return new Promise((resolve, reject) => {
             sql.query('SELECT * FROM image', (err, res) => {
                 console.log(res)
-                if (err) reject(err)
-                else resolve(res)
+                if (err) { reject(err) }
+                else { resolve(res) }
             })
         })
-    }
+    },
 }

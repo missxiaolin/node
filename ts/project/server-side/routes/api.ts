@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 import controllerApi = require('../controller/api')
 
-router.post('/file_upload', async function (req, res, next) {
+router.post('/file_upload', async function(req, res, next) {
     try {
         await controllerApi.upload(req)
         res.send('success')
@@ -11,7 +11,7 @@ router.post('/file_upload', async function (req, res, next) {
     }
 })
 
-router.get('/list', async function (req, res, next) {
+router.get('/list', async function(req, res, next) {
     try {
         const result = await controllerApi.getList(req)
         res.send(result)

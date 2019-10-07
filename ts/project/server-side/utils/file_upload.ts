@@ -1,7 +1,7 @@
-import path = require('path')
 import formidable = require('formidable')
+import path = require('path')
 
-export = function (req): Promise<formidable.File> {
+export = function(req): Promise<formidable.File> {
     return new Promise((resolve, reject) => {
         const form = new formidable.IncomingForm()
         form.encoding = 'utf-8'
@@ -9,8 +9,8 @@ export = function (req): Promise<formidable.File> {
         form.keepExtensions = true
         form.parse(req, (err, fields, files) => {
             const { file } = files
-            if (!err) resolve(file)
-            else reject(err)
+            if (!err) { resolve(file) }
+            else { reject(err) }
         })
     })
 }

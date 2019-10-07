@@ -1,5 +1,5 @@
-import file_upload = require('../utils/file_upload')
 import apiModelServer = require('../model/server/api')
+import file_upload = require('../utils/file_upload')
 
 export = {
     upload: async (req: Express.Request) => {
@@ -10,5 +10,5 @@ export = {
     },
     getList: async (req: Express.Request) => {
         return apiModelServer.getList()
-    }
+    },
 }
