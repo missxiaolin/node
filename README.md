@@ -262,3 +262,5 @@ or
 
 * [electron](https://github.com/electron/electron)
 * [fx](https://github.com/antonmedv/fx) - 交互式 JSON 查看。
+* vue canvas操作 npm install fabric（或yarn add fabric）
+
