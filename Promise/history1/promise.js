@@ -6,7 +6,13 @@ const REJECTED = "REJECTED";
 //     throw new Error();
 //   }
 // })
-// promise的处理函数
+/**
+ * promise的处理函数
+ * @param {*} promise2 
+ * @param {*} x 
+ * @param {*} resolve 
+ * @param {*} reject 
+ */
 const resolvePromise = (promise2, x, resolve, reject) => {
   // 处理x 的类型 来决定是调用resolve还是reject
   // 必须要写的很严谨 
@@ -76,6 +82,12 @@ class Promise {
       reject(e);
     }
   }
+
+  /**
+   * 回调
+   * @param {*} onFulfilled 
+   * @param {*} onRejected 
+   */
   then(onFulfilled, onRejected) {
     // 可选参数 没传 就给你一个默认参数即可
     onFulfilled = typeof onFulfilled === 'function'?onFulfilled:val=>val;
@@ -131,14 +143,29 @@ class Promise {
     });
     return promise2;
   }
+
+  /**
+   * 捕获错误
+   * @param {*} errCallback 
+   */
   catch(errCallback){ // 没有成功的then
     return this.then(null,errCallback)
   }
+
+  /**
+   * 失败
+   * @param {*} reason 
+   */
   static reject(reason){ // 创建了一个失败的promise
     return new Promise((resolve,reject)=>{
       reject(reason);
     })
   }
+
+  /**
+   * 成功
+   * @param {*} value 
+   */
   static resolve(value){ // 创建了一个成功的promise
     return new Promise((resolve,reject)=>{
       resolve(value);
