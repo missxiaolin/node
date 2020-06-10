@@ -10,25 +10,25 @@
 // 4) 如果一旦成功了 不能变成失败 一旦失败 不能在成功了 只有当前状态是pending的时候 才能更改状态
 // 5) 每个promise都有一个then方法
 let Promise = require('../promise')
-let p = new Promise((resolve,reject)=>{
-    setTimeout(()=>{
+let p = new Promise((resolve, reject) => {
+    setTimeout(() => {
         resolve('我有钱');
         //throw new Error('失败'); // 如果抛出异常也会执行失败
-    },1000)
+    }, 1000)
 });
 // 没有完全解决回调问题
-p.then(data=>{ // 成功的毁掉
-    console.log('success',data);
-},err=>{
-    console.log('error',err) // 失败的回调
+p.then(data => { // 成功的毁掉
+    console.log('success', data);
+}, err => {
+    console.log('error', err) // 失败的回调
 })
-p.then(data=>{ // 成功的毁掉
-    console.log('success',data);
-},err=>{
-    console.log('error',err) // 失败的回调
+p.then(data => { // 成功的毁掉
+    console.log('success', data);
+}, err => {
+    console.log('error', err) // 失败的回调
 })
-p.then(data=>{ // 成功的毁掉
-    console.log('success',data);
-},err=>{
-    console.log('error',err) // 失败的回调
+p.then(data => { // 成功的毁掉
+    console.log('success', data);
+}, err => {
+    console.log('error', err) // 失败的回调
 })
