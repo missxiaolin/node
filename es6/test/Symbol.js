@@ -86,5 +86,3 @@ arr[Symbol.isConcatSpreadable] = false;
 console.log(arr.concat(4, 5, 6));
 
 // Symbol 11 reflect 13
-
-// 8月26 就业班开班 
