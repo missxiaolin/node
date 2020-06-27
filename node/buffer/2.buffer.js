@@ -10,7 +10,7 @@ buf.fill(0);
 buf = Buffer.from([100,120,130]); // 很少用到
 console.log(buf);
 
-buf = Buffer.from('珠峰');
+buf = Buffer.from('天白');
 console.log(buf)
 
 // 2) buffer常见方法  11.45
@@ -21,7 +21,7 @@ let newArr = arr.slice(0)
 newArr[0][1] = 100;
 console.log(arr);
 
-let buffer = Buffer.from('珠峰');  // buffer存放的都是内存地址，如果截取某一段 改变的时候也是更改了这个内存地址
+let buffer = Buffer.from('天白');  // buffer存放的都是内存地址，如果截取某一段 改变的时候也是更改了这个内存地址
 let newBuffer = buffer.slice(0);
 newBuffer[0] = 100;
 console.log(buffer)
@@ -60,9 +60,9 @@ console.log(newBuffer.toString('base64'));
 // isBuffer length 字节数 toString('base64') slice fill 
 // 3) 扩展buffer的方法
 
-let buffer = Buffer.from(`珠峰珠峰珠峰
-珠峰珠峰珠峰
-珠峰珠峰珠峰`);
+let buffer = Buffer.from(`天白
+天白
+天白`);
 // 行读取器 文本 
 
 Buffer.prototype.split = function(sep){
