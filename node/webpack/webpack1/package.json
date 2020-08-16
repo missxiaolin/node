@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production"
+    "dev:build": "webpack --env.development --config ./build/webpack.base.js",
+    "dev": "webpack-dev-server --env.development --config ./build/webpack.base.js",
+    "build": "webpack --env.production --config ./build/webpack.base.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2"
   }
 }
