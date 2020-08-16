@@ -2,6 +2,7 @@ const dev = require("./webpack.dev");
 const prod = require("./webpack.prod");
 const path = require("path");
 const merge = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 
 module.exports = (env) => { // env 环境变量
@@ -12,9 +13,18 @@ module.exports = (env) => { // env 环境变量
         output: {
             filename: "bundle.js",
             path: path.resolve(__dirname, "../dist")
-        }
+        },
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, "../public/index.html"),
+                filename: "index.html",
+                minify: !isDev && {
+                    removeAttributeQuotes: true,
+                    collapseWhitespace: true
+                }
+            })
+        ]
     }
-    console.log(merge)
 
     // 函数要返回配置文件，没返回会采用默认配置
     if (isDev) {
