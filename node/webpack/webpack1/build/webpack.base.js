@@ -35,6 +35,22 @@ module.exports = (env) => { // env 环境变量
                     test: /\.scss$/,
                     use: ["style-loader", "css-loader", "sass-loader"]
                 },
+                { // 图标的转化
+                    test:/\.(woff|ttf|eot)$/,
+                    use:'file-loader'
+                },
+                { // 图片的转化
+                    test:/\.(jpe?g|png|gif|svg)$/,
+                    use:{
+                        loader:'url-loader',
+                        // 如果大于100k的图片 会使用file-loader
+                        options:{
+                            name:"image/[contentHash].[ext]",
+                            limit:1024
+                        }
+                    } // file-loader 默认的功能是拷贝的作用
+                    // 我希望当前比较小的图片可以转化成 base64 比以前大，好处就是不用发送http请求
+                }
             ]
         },
         output: {
