@@ -10,6 +10,15 @@ module.exports = (env) => { // env 环境变量
     let isDev = env.development;
     const base = {
         entry: path.resolve(__dirname, "../src/index.js"),
+        module: {
+            // 转化什么文件 用什么转 使用那些loader
+            rules: [
+                {
+                    test: /\.css$/,
+                    use: ['style-loader', 'css-loader']
+                },
+            ]
+        },
         output: {
             filename: "bundle.js",
             path: path.resolve(__dirname, "../dist")
