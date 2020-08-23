@@ -6,6 +6,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
+const glob = require('glob') // 主要功能就是查找匹配的文件
+const PurgeCssWebpackPlugin = require('purgecss-webpack-plugin') // 删除无意义的css，只能配合mini-css-extract-plugin
 
 
 module.exports = (env) => { // env 环境变量
@@ -84,7 +86,10 @@ module.exports = (env) => { // env 环境变量
                     removeAttributeQuotes: true,
                     collapseWhitespace: true
                 }
-            })
+            }),
+            // new PurgeCssWebpackPlugin({ // body 也直接删了待解决
+            //     paths: glob.sync(`${__dirname}/../src/**/*`, { nodir: true })
+            // })
         ].filter(Boolean)
     }
 
