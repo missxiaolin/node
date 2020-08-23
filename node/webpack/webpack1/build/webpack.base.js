@@ -80,16 +80,16 @@ module.exports = (env) => { // env 环境变量
             }),
             new VueLoaderPlugin(),
             new HtmlWebpackPlugin({
-                template: path.resolve(__dirname, "../public/index.html"),
+                template: path.resolve(__dirname, "../src/index.html"),
                 filename: "index.html",
                 minify: !isDev && {
                     removeAttributeQuotes: true,
                     collapseWhitespace: true
                 }
             }),
-            // new PurgeCssWebpackPlugin({ // body 也直接删了待解决
-            //     paths: glob.sync(`${__dirname}/../src/**/*`, { nodir: true })
-            // })
+            new PurgeCssWebpackPlugin({ // body 也直接删了待解决
+                paths: glob.sync(`${__dirname}/../src/**/*`, { nodir: true })
+            })
         ].filter(Boolean)
     }
 
