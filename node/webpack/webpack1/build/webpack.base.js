@@ -10,6 +10,9 @@ const glob = require('glob') // 主要功能就是查找匹配的文件
 const PurgeCssWebpackPlugin = require('purgecss-webpack-plugin') // 删除无意义的css，只能配合mini-css-extract-plugin
 
 
+const AddCdnPlugin = require('add-asset-html-cdn-webpack-plugin')
+
+
 module.exports = (env) => { // env 环境变量
     // env 是环境变量
     let isDev = env.development;
@@ -73,6 +76,9 @@ module.exports = (env) => { // env 环境变量
             filename: "bundle.js",
             path: path.resolve(__dirname, "../dist")
         },
+        externals: {
+            'jquery': '$',
+        },
         plugins: [
             // 在每次打包之前 先清除dist目录下的文件
             !isDev && new MiniCssExtractPlugin({ // 如果是开发模式就不要使用抽离样式的插件
@@ -89,6 +95,10 @@ module.exports = (env) => { // env 环境变量
             }),
             new PurgeCssWebpackPlugin({ // body 也直接删了待解决
                 paths: glob.sync(`${__dirname}/../src/**/*`, { nodir: true })
+            }),
+            // http://code.jquery.com/jquery-migrate-1.2.1.min.js
+            new AddCdnPlugin(true, {
+                'jquery': 'http://code.jquery.com/jquery-migrate-1.2.1.min.js'
             })
         ].filter(Boolean)
     }
