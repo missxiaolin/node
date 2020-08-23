@@ -94,11 +94,11 @@ module.exports = (env) => { // env 环境变量
                 }
             }),
             new PurgeCssWebpackPlugin({ // body 也直接删了待解决
-                paths: glob.sync(`${__dirname}/../src/**/*`, { nodir: true })
+                paths: glob.sync(`${__dirname}/../**/*`, { nodir: true })
             }),
             // http://code.jquery.com/jquery-migrate-1.2.1.min.js
             new AddCdnPlugin(true, {
-                'jquery': 'http://code.jquery.com/jquery-migrate-1.2.1.min.js'
+                'jquery': 'http://code.jquery.com/jquery-migrate-1.2.1.min.js   '
             })
         ].filter(Boolean)
     }
