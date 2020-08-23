@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
+
 module.exports = (env) => { // env 环境变量
     // env 是环境变量
     let isDev = env.development;
@@ -14,6 +15,10 @@ module.exports = (env) => { // env 环境变量
         module: {
             // 转化什么文件 用什么转 使用那些loader
             rules: [
+                { // 解析js文件 默认会调用@babel/core 
+                    test:/\.js$/,
+                    use:'babel-loader'
+                },
                 {
                     test: /\.css$/,
                     use: [ // 是不是开发环境 如果是就用style-loader
@@ -70,7 +75,7 @@ module.exports = (env) => { // env 环境变量
                     collapseWhitespace: true
                 }
             })
-        ]
+        ].filter(Boolean)
     }
 
     // 函数要返回配置文件，没返回会采用默认配置
