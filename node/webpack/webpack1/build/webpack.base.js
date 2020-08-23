@@ -19,21 +19,21 @@ module.exports = (env) => { // env 环境变量
             // 转化什么文件 用什么转 使用那些loader
             rules: [
                 {
-                    test:/\.vue$/,
-                    use:'vue-loader'
+                    test: /\.vue$/,
+                    use: 'vue-loader'
                 },
                 { // 解析js文件 默认会调用@babel/core 
-                    test:/\.tsx?$/,
-                    use:'babel-loader'
+                    test: /\.tsx?$/,
+                    use: 'babel-loader'
                 },
                 { // 解析js文件 默认会调用@babel/core 
-                    test:/\.js$/,
-                    use:'babel-loader'
+                    test: /\.js$/,
+                    use: 'babel-loader'
                 },
                 {
                     test: /\.css$/,
                     use: [ // 是不是开发环境 如果是就用style-loader
-                        isDev?"style-loader":MiniCssExtractPlugin.loader,
+                        isDev ? "style-loader" : MiniCssExtractPlugin.loader,
                         {
                             loader: "css-loader",
                             options: {
@@ -46,23 +46,23 @@ module.exports = (env) => { // env 环境变量
                         "sass-loader"
                     ]
                 },
-                {
-                    // 匹配到scss结尾的使用sass-loader 来调用node-sass处理sass文件
-                    test: /\.scss$/,
-                    use: ["style-loader", "css-loader", "sass-loader"]
-                },
+                // {
+                //     // 匹配到scss结尾的使用sass-loader 来调用node-sass处理sass文件
+                //     test: /\.scss$/,
+                //     use: ["style-loader", "css-loader", "sass-loader"]
+                // },
                 { // 图标的转化
-                    test:/\.(woff|ttf|eot)$/,
-                    use:'file-loader'
+                    test: /\.(woff|ttf|eot)$/,
+                    use: 'file-loader'
                 },
                 { // 图片的转化
-                    test:/\.(jpe?g|png|gif|svg)$/,
-                    use:{
-                        loader:'url-loader',
+                    test: /\.(jpe?g|png|gif|svg)$/,
+                    use: {
+                        loader: 'url-loader',
                         // 如果大于100k的图片 会使用file-loader
-                        options:{
-                            name:"image/[contentHash].[ext]",
-                            limit:1024
+                        options: {
+                            name: "image/[contentHash].[ext]",
+                            limit: 1024
                         }
                     } // file-loader 默认的功能是拷贝的作用
                     // 我希望当前比较小的图片可以转化成 base64 比以前大，好处就是不用发送http请求
@@ -76,7 +76,7 @@ module.exports = (env) => { // env 环境变量
         plugins: [
             // 在每次打包之前 先清除dist目录下的文件
             !isDev && new MiniCssExtractPlugin({ // 如果是开发模式就不要使用抽离样式的插件
-                filename:'css/main.css'
+                filename: 'css/main.css'
             }),
             new VueLoaderPlugin(),
             new HtmlWebpackPlugin({
