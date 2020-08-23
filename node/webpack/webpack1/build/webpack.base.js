@@ -4,6 +4,7 @@ const path = require("path");
 const merge = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 
 
@@ -11,10 +12,18 @@ module.exports = (env) => { // env 环境变量
     // env 是环境变量
     let isDev = env.development;
     const base = {
-        entry: path.resolve(__dirname, "../src/index.js"),
+        entry: path.resolve(__dirname, "../src/index.ts"),
         module: {
             // 转化什么文件 用什么转 使用那些loader
             rules: [
+                {
+                    test:/\.vue$/,
+                    use:'vue-loader'
+                },
+                { // 解析js文件 默认会调用@babel/core 
+                    test:/\.tsx?$/,
+                    use:'babel-loader'
+                },
                 { // 解析js文件 默认会调用@babel/core 
                     test:/\.js$/,
                     use:'babel-loader'
@@ -67,6 +76,7 @@ module.exports = (env) => { // env 环境变量
             !isDev && new MiniCssExtractPlugin({ // 如果是开发模式就不要使用抽离样式的插件
                 filename:'css/main.css'
             }),
+            new VueLoaderPlugin(),
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, "../public/index.html"),
                 filename: "index.html",
