@@ -3,7 +3,8 @@ import App from './App.vue'
 import './index.css'
 
 // tree-shaking 默认只支持 es6语法的 静态导入
-import { add } from './clac.js'
+import { add } from './clac'
+import  './test'
 console.log(add(1, 2))
 
 
