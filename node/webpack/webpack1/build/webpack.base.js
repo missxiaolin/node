@@ -79,6 +79,9 @@ module.exports = (env) => { // env 环境变量
         externals: {
             'jquery': '$',
         },
+        optimization: {
+            usedExports: true, // 使用了哪个模块
+        },
         plugins: [
             // 在每次打包之前 先清除dist目录下的文件
             !isDev && new MiniCssExtractPlugin({ // 如果是开发模式就不要使用抽离样式的插件

@@ -1,6 +1,12 @@
 import Vue from 'vue';
 import App from './App.vue'
 import './index.css'
+
+// tree-shaking 默认只支持 es6语法的 静态导入
+import { add } from './clac.js'
+console.log(add(1, 2))
+
+
 let vm = new Vue({
     el:"#root",
     render:h=>h(App)
