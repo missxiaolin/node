@@ -81,6 +81,28 @@ module.exports = (env) => { // env 环境变量
         },
         optimization: {
             usedExports: true, // 使用了哪个模块
+            // splitChunks: {
+            //     chunks: 'async', // 默认支持异步的代码分割 import()
+            //     minSize: 30000, // 文件超过30k 会抽离
+            //     maxSize: 0,
+            //     minChunks: 1, // 最少模块引用一次才抽离
+            //     maxAsyncRequests: 5, // 最多5个请求
+            //     maxInitialRequests: 3, // 最多首屏加载3个请求
+            //     automaticNameDelimiter: '~', // xxx~a~b
+            //     automaticNameMacLength: 30, // 最长名字大小
+            //     name: true,
+            //     cacheGrops: {// 缓存组
+            //         vendors: {
+            //             test: //,
+            //             priorityL -10
+            //         },
+            //         default: {
+            //             minChunks: 2,
+            //             priority: -20,
+            //             reuseExistingChunk: true
+            //         }
+            //     }
+            // }
         },
         plugins: [
             // 在每次打包之前 先清除dist目录下的文件
