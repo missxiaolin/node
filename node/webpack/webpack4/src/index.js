@@ -1,3 +1,3 @@
 let title = require('./title')
 
-console.log(1)
+console.log(title)
