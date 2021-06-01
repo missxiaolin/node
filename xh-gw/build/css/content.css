@@ -1,0 +1,47 @@
+.article {
+  padding: 20px;
+}
+.article .article_tit {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 30px;
+  padding: 10px 0 10px 0;
+  text-align: center;
+  color: #BC1015;
+}
+.article .article_msg {
+  font-size: 12px;
+  color: #666;
+  padding: 10px 0 10px 0;
+  text-align: center;
+}
+.article .article_msg .article_msg span {
+  padding: 0 5px;
+}
+.article .article_body {
+  font-size: 14px;
+  line-height: 32px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+.article .article_nav {
+  height: 30px;
+  line-height: 30px;
+}
+.article .article_nav .pre {
+  float: left;
+  width: 45%;
+  text-align: left;
+}
+.article .article_nav .next {
+  float: right;
+  width: 45%;
+  text-align: right;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.article .article_nav a {
+  color: #666666;
+  text-decoration: none;
+}
