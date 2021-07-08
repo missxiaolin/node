@@ -74,3 +74,47 @@ export const isCardID = (sId) => {
 
     return true
 }
+
+function createScript(url, charset) {
+    const script = document.createElement('script');
+    script.setAttribute('type', 'text/javascript');
+    charset && script.setAttribute('charset', charset);
+    script.setAttribute('src', url);
+    script.async = true;
+    return script;
+}
+
+function jsonp(url, onsuccess, onerror, charset) {
+    const hash = Math.random().toString().slice(2);
+    window['jsonp' + hash] = function (data) {
+        if (onsuccess && typeof(onsuccess) === 'function') {
+            onsuccess(data);
+        }
+    }
+
+    const script = createScript(url + '?callback=jsonp' + hash, charset);
+
+    // 监听加载成功的事件，获取数据，这个位置用了两个事件onload和onreadystatechange是为了兼容IE，因为IE9之前不支持onload事件，只支持onreadystatechange事件
+    script.onload = script.onreadystatechange = function() {
+        //若不存在readyState事件则证明不是IE浏览器，可以直接执行，若是的话，必须等到状态变为loaded或complete才可以执行
+        if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
+            script.onload = script.onreadystatechange = null;
+            // 移除该script的DOM对象
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
+
+            // 删除函数或变量
+            window['jsonp' + hash] = null;
+        }
+    };
+
+    script.onerror = function() {
+        if (onerror && typeof(onerror) === 'function') {
+            onerror();
+        }
+    }
+
+    // 添加标签，发送请求
+    document.getElementsByTagName('head')[0].appendChild(script);
+}
