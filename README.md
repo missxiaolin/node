@@ -111,7 +111,7 @@ or
 * [next.js](https://github.com/zeit/next.js)
 * [nuxt.js](https://github.com/nuxt/nuxt.js)
 * [gastby](https://github.com/gatsbyjs/gatsby)
-* [umi](https://github.com/umijs/umi) - 蚂蚁金服的前端框架，我目前在维护。
+* [umi](https://github.com/umijs/umi) - 蚂蚁金服的前端框架。
 * [choo](https://github.com/choojs/choo) - dva 最初的 API 是参考这个实现的，已经不怎么发展了，再关注一段时间。
 * [taro](https://github.com/NervJS/taro) - 用 React 写小程序，适配微信和支付宝等。
 * [after.js](https://github.com/jaredpalmer/after.js)
