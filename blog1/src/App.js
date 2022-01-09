@@ -1,8 +1,9 @@
 import './style.scss'
+import styles from './style.module.scss'
 
 function App() {
   return (
-    <div>
+    <div className={styles.app}>
       hell word
     </div>
   );
