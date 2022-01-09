@@ -1,12 +1,9 @@
-import './style.scss'
-import styles from './style.module.scss'
+import Home from './container/Home';
 import 'normalize.css'
 
 function App() {
   return (
-    <div className={styles.app }>
-      hell word
-    </div>
+    <Home />
   );
 }
 
