@@ -73,3 +73,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ### 库
 
 - 拖拽 react-sortablejs
+- 排序 react-sortable-hoc
