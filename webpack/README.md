@@ -5,5 +5,5 @@ node -r ts-node/register --inspect-brk xxxx.ts
 ~~~
 
 ~~~
- node -r ts-node/register xxx.ts
+node -r ts-node/register xxx.ts
 ~~~
