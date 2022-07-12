@@ -1,0 +1,15 @@
+{
+  "name": "rem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "autoprefixer": "^6.1.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
