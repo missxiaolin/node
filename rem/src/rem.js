@@ -205,6 +205,7 @@ Px2rem.prototype.getRemValue = function (type, value, dpr) {
   }
 
   return value.replace(pxGlobalRegExp, function ($0, $1) {
+    console.log($1)
     return type === "px"
       ? getValue(($1 * dpr) / config.baseDpr)
       : getValue($1 / config.remUnit);

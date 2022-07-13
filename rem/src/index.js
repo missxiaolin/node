@@ -6,3 +6,4 @@ let a = `
 `
 console.log(rem.prototype.generateRem(a))
 console.log(rem.prototype.getRemValue('rem', '100px'))
+console.log(100/75)
