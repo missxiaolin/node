@@ -1,3 +1,4 @@
+import './lib-flexible'
 import rem from './rem'
 let a = `
 .a {

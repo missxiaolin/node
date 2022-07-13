@@ -257,7 +257,17 @@ eval("// Copyright 2014 Simon Lydell\r\n// X11 (“MIT”) Licensed. (See LICENS
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _rem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rem */ \"./src/rem.js\");\n/* harmony import */ var _rem__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_rem__WEBPACK_IMPORTED_MODULE_0__);\n\nlet a = `\n.a {\n    width: 100px;\n}\n`\nconsole.log(_rem__WEBPACK_IMPORTED_MODULE_0___default().prototype.generateRem(a))\nconsole.log(_rem__WEBPACK_IMPORTED_MODULE_0___default().prototype.getRemValue('rem', '100px'))\nconsole.log(100/75)\n\n//# sourceURL=webpack://rem/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _lib_flexible__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib-flexible */ \"./src/lib-flexible.js\");\n/* harmony import */ var _lib_flexible__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_lib_flexible__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _rem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rem */ \"./src/rem.js\");\n/* harmony import */ var _rem__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_rem__WEBPACK_IMPORTED_MODULE_1__);\n\n\nlet a = `\n.a {\n    width: 100px;\n}\n`\nconsole.log(_rem__WEBPACK_IMPORTED_MODULE_1___default().prototype.generateRem(a))\nconsole.log(_rem__WEBPACK_IMPORTED_MODULE_1___default().prototype.getRemValue('rem', '100px'))\nconsole.log(100/75)\n\n//# sourceURL=webpack://rem/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/lib-flexible.js":
+/*!*****************************!*\
+  !*** ./src/lib-flexible.js ***!
+  \*****************************/
+/***/ (() => {
+
+eval("(function flexible(window, document) {\n  var docEl = document.documentElement;\n  var dpr = window.devicePixelRatio || 1;\n\n  // adjust body font size\n  function setBodyFontSize() {\n    if (document.body) {\n      document.body.style.fontSize = 12 * dpr + \"px\";\n    } else {\n      document.addEventListener(\"DOMContentLoaded\", setBodyFontSize);\n    }\n  }\n  setBodyFontSize();\n\n  // set 1rem = viewWidth / 10\n  function setRemUnit() {\n    var rem = docEl.clientWidth / 10;\n    docEl.style.fontSize = rem + \"px\";\n  }\n\n  setRemUnit();\n\n  // reset rem unit on page resize\n  window.addEventListener(\"resize\", setRemUnit);\n  window.addEventListener(\"pageshow\", function (e) {\n    if (e.persisted) {\n      setRemUnit();\n    }\n  });\n\n  // detect 0.5px supports\n  if (dpr >= 2) {\n    var fakeBody = document.createElement(\"body\");\n    var testElement = document.createElement(\"div\");\n    testElement.style.border = \".5px solid transparent\";\n    fakeBody.appendChild(testElement);\n    docEl.appendChild(fakeBody);\n    if (testElement.offsetHeight === 1) {\n      docEl.classList.add(\"hairlines\");\n    }\n    docEl.removeChild(fakeBody);\n  }\n})(window, document);\n\n\n//# sourceURL=webpack://rem/./src/lib-flexible.js?");
 
 /***/ }),
 
