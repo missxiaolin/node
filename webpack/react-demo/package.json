@@ -10,7 +10,31 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "@types/history": "4.7.9",
+    "@types/react-router": "5.1.16",
+    "history": "4.10.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-router": "5.2.1",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.12.17",
+    "@babel/preset-env": "7.12.17",
+    "@babel/preset-react": "7.12.13",
+    "@babel/preset-typescript": "7.12.17",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.1",
+    "@typescript-eslint/eslint-plugin": "4.15.1",
+    "@typescript-eslint/parser": "4.15.1",
+    "babel-loader": "8.2.2",
+    "babel-eslint": "10.1.0",
+    "css-loader": "5.0.2",
+    "eslint": "7.20.0",
+    "eslint-config-airbnb-typescript": "12.3.1",
+    "html-webpack-plugin": "^5.3.2",
+    "style-loader": "^3.2.1",
+    "webpack-dev-server": "4.0.0"
   }
 }
