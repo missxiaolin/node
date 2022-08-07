@@ -3,9 +3,9 @@ const eslintWebpackPlugin = require('eslint-webpack-plugin')
 module.exports = {
   mode: "production",
   plugins: [
-    new eslintWebpackPlugin({
-      extensions: ['.js', '.jsx']
-    })
+    // new eslintWebpackPlugin({
+    //   extensions: ['.js', '.jsx']
+    // })
   ],
   module: {
     rules: [
