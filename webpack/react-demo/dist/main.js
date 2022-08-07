@@ -1,1 +1,1 @@
-!function(){"use strict";console.log(1),console.log({a:1}),console.log(2)}();
+!function(){"use strict";console.log(1),console.log((function(){return React.createElement("div",null,"hi")})),console.log({a:1}),console.log(2)}();
