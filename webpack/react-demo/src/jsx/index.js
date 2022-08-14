@@ -6,4 +6,6 @@ const JsxDemo = () => {
     )
 }
 
-export { JsxDemo }
+export {
+    JsxDemo
+}

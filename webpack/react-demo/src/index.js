@@ -1,9 +1,9 @@
 import a from './common/util'
-import { JsxDemo } from './jsx/index'
 import './ts/index.ts'
+import { tsxDemo } from './tsx/index.tsx'
 
 console.log(1)
-console.log(JsxDemo)
+console.log(tsxDemo)
 
 let b = () => {
     console.log(2)
