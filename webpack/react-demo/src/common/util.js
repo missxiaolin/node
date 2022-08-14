@@ -1,3 +1,5 @@
-export default {
-    a: 1
-}
+const a = {
+  a: 1,
+};
+
+export default a;
