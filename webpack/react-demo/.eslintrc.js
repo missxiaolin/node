@@ -15,7 +15,6 @@ module.exports = {
             '@typescript-eslint/object-curly-spacing': [0],
             'import/prefer-default-export': [0],
             '@typescript-eslint/semi': [0],
-            'import/no-anonymous-default-expor': [0]
         }
     }]
 }
