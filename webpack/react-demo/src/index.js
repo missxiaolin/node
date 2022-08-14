@@ -1,4 +1,4 @@
-import a from './common/util'
+import a from '@/common/util'
 import './ts/index.ts'
 import { tsxDemo } from './tsx/index.tsx'
 
