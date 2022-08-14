@@ -1,5 +1,6 @@
 import a from './common/util'
 import { JsxDemo } from './jsx/index'
+import './ts/index.ts'
 
 console.log(1)
 console.log(JsxDemo)
