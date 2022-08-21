@@ -2,8 +2,10 @@ const eslintWebpackPlugin = require('eslint-webpack-plugin')
 const path = require('path')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const mode = 'production'
+
 module.exports = {
-  mode: "production",
+  mode: mode,
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/')
@@ -48,9 +50,10 @@ module.exports = {
         {
           test: /\.s[ca]ss$/,
           use: [
+            mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
             // 将 JS 字符串生成为 style 节点
             // 'style-loader',
-            MiniCssExtractPlugin.loader,
+            // MiniCssExtractPlugin.loader,
             // 将 CSS 转化成 CommonJS 模块
             // 'css-loader',
             {
