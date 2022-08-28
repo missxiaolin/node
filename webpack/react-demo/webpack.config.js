@@ -25,6 +25,9 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].[contenthash].js'
   },
+  optimization: {
+    runtimeChunk: 'single'
+  },
   module: {
     rules: [
         {
