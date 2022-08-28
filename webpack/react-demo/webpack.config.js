@@ -26,6 +26,7 @@ module.exports = {
     filename: '[name].[contenthash].js'
   },
   optimization: {
+    moduleIds: 'deterministic',
     runtimeChunk: 'single', // 只要不修改入口文件用户就不需要再次下载，节省用户带宽
     splitChunks: {
       cacheGroups: {
