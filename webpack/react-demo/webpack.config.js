@@ -26,7 +26,19 @@ module.exports = {
     filename: '[name].[contenthash].js'
   },
   optimization: {
-    runtimeChunk: 'single' // 只要不修改入口文件用户就不需要再次下载，节省用户带宽
+    runtimeChunk: 'single', // 只要不修改入口文件用户就不需要再次下载，节省用户带宽
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          minSize: 0, // 如果不写0 由于react 文件尺寸太小 会直接跳过
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor', // 文件名
+          chunks: 'all', // all 表示同步加载和异步加载，async 表示异步加载 initial 表示同步加载
+          // 第三行的整体意思就是把两种加载方式的来自node_modules 目录的文件打包为vandor.xx.js
+          // 其中vendors 是第三方的意思
+        }
+      }
+    }
   },
   module: {
     rules: [
