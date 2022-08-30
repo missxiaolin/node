@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网络状态</title>
+    <style type='text/css'>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .home {
+            text-align: center;
+        }
+        img {
+            width: 80px;
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <img id="img" src="./image/1.jpg" />
+    <p id="p">loading...</p>
+
+    <!-- <img width= onerror='reSetImgUrl(this, this.src , 3)' src='http://'/>  -->
+
+    <script type="text/javascript">
+        let img = document.getElementById('img');
+        let p = document.getElementById('p');
+        img.onload = function() {
+            p.innerHTML = '加载完毕'
+        }
+    </script>
+
+    <script type="text/javascript">
+        let img = document.getElementById('img');
+        let p = document.getElementById('p');
+        function imgLoad(img, callback) {
+            var timer = setInterval(function() {
+                console.log('img.complete--->', img.complete);
+                if (img.complete) { // 当图片完全加载完成时值为 true；否则，值为 false。
+                    callback();
+                    if (timer) {
+                        clearInterval(timer);
+                    }
+                }
+            }, 50)
+        }
+        imgLoad(img, function() {
+            p.innerHTML = '加载完毕'
+        });
+    </script> 
+
+
+    <script>
+        function reSetImgUrl(imgObj,imgSrc,maxErrorNum){  
+            if(maxErrorNum > 0){  
+                    imgObj.onerror=function(){  
+                        reSetImgUrl(imgObj,imgSrc,maxErrorNum-1);  
+                    };  
+                    setTimeout(function(){  
+                        imgObj.src=imgSrc;  
+                    },500);  
+                }else{  
+                    imgObj.onerror=null;  
+                    imgObj.src="./image/1.jpg";  
+                }  
+        
+            }  
+        
+    </script>
+</body>
+</html>
