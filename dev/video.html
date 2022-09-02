@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width= , initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>视频倍速播放</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-size: cover;
+            font-family: sans-serif;
+        }
+
+        .wrapper {
+            width: 850px;
+            display: flex;
+        }
+
+        video {
+            box-shadow: 0 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .speed-item {
+            border: 1px solid;
+            padding: 5px;
+            border-color: #3375b1;
+            cursor: pointer;
+            background: #b86ecd;
+            margin: 5px;
+        }
+        .speed-item:hover {
+            background: #7ccd6e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper .player-info">
+        <video class="video" width="100%" height="100%" src="./image/1.MP4" loop controls>
+
+        </video>
+    </div>
+</body>
+<script>
+    // 获取三个元素
+    const video = document.querySelector('.video');
+    function handleMove(e) {
+       //  console.log(e.target. e.currentTarget);
+        let playbackRate = e.target.getAttribute('speed');
+        video.playbackRate = playbackRate;//通过playbackRate属性改变播放速率
+    }
+    // 给鼠标添加移动事件
+    speed.addEventListener('click', handleMove);
+</script>
+
+</html>
