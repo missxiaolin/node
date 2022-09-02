@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>520表白-照片特效</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        #dawei{
+            width: 200px;
+            height:200px;
+            margin: 200px auto;
+            transform-style:preserve-3d;
+            animation:rotate 20s infinite;
+            animation-timing-function: linear;
+        }
+        @keyframes rotate {
+            from{transform: rotateX(0deg) rotateY(0deg);}
+            to{transform: rotateX(360deg) rotateY(360deg);}
+        }
+        #dawei div {
+            position:absolute;
+            transition: all .4s;
+        }
+        div .out_pic{
+            width:200px;
+            height:200px;
+            opacity:0.9;
+        }
+        div .in_pic{
+            width:100px;
+            height:100px;
+        }
+        #dawei span{
+            display:block;
+            position:absolute;
+            width:100px;
+            height:100px;
+            top:50px;
+            left:50px;
+        }
+        .out_frount{
+            transform:translateZ(100px);
+        }
+        .out_back{
+            transform:translateZ(-100px);
+        }
+        .out_left{
+            transform:rotateY(90deg) translateZ(100px);
+        }
+        .out_right{
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+        .out_top{
+            transform:rotateX(90deg) translateZ(100px);
+        }
+        .out_bottom{
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+
+        .in_frount{
+            transform:translateZ(50px);
+        }
+        .in_back{
+            transform:translateZ(-50px);
+        }
+        .in_left{
+            transform:rotateY(90deg) translateZ(50px);
+        }
+        .in_right{
+            transform: rotateY(-90deg) translateZ(50px);
+        }
+        .in_top{
+            transform:rotateX(90deg) translateZ(50px);
+        }
+        .in_bottom{
+            transform: rotateX(-90deg) translateZ(50px);
+        }
+        
+        #dawei:hover .out_frount{
+            transform:translateZ(200px);
+        }
+        #dawei:hover .out_back{
+            transform:translateZ(-200px);
+        }
+        #dawei:hover .out_left{
+            transform:rotateY(90deg) translateZ(200px);
+        }
+        #dawei:hover .out_right{
+            transform: rotateY(-90deg) translateZ(200px);
+        }
+        #redaweiact:hover .out_top{
+            transform:rotateX(90deg) translateZ(200px);
+        }
+        #dawei:hover .out_bottom{
+            transform: rotateX(-90deg) translateZ(200px);
+        }
+    </style>
+</head>
+
+<body>
+<div id="dawei">
+    <div class="out_frount">
+        <image src="image/1.jpeg" class="out_pic">
+    </div>
+    <div class="out_back">
+        <image src="image/1.jpeg" class="out_pic">
+    </div>
+    <div class="out_left">
+        <image src="image/1.jpeg" class="out_pic">
+    </div>
+    <div class="out_right">
+        <image src="image/1.jpeg" class="out_pic">
+    </div>
+    <div class="out_top">
+        <image src="image/1.jpeg" class="out_pic">
+    </div>
+    <div class="out_bottom">
+        <image src="image/1.jpeg" class="out_pic">
+    </div>
+    <span class="in_frount">
+        <image src="image/1.jpeg" class="in_pic">
+    </span>
+    <span class="in_back">
+        <image src="image/1.jpeg" class="in_pic">
+    </span>
+    <span class="in_left">
+        <image src="image/1.jpeg" class="in_pic">
+    </span>
+    <span class="in_right">
+        <image src="image/1.jpeg" class="in_pic">
+    </span>
+    <span class="in_top">
+        <image src="image/1.jpeg" class="in_pic">
+    </span>
+    <span class="in_bottom">
+        <image src="image/1.jpeg" class="in_pic">
+    </span>
+</div>
+</body>
+</html>
