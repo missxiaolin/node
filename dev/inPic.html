@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画中画模式</title>
+</head>
+<body>
+    <!-- autoplay -->
+    <video id="video" width="520px" src="./image/test.mp4" controls ></video>
+    <button id="toggle">toggle</button>
+
+    <script>
+        const btn = document.querySelector('#toggle')
+        const video = document.querySelector('#video')
+
+        function printPipWindowDimensions(evt) {
+            const pipWindow = evt.target;
+            console.log(`The floating window dimensions are: ${pipWindow.width}x${pipWindow.height}px`);
+        }
+        function leave(evt) {
+            console.log('leave==========', evt);
+        }
+        function enter(evt) {
+            console.log('enter==========', evt);
+        }
+        video.addEventListener('enterpictureinpicture', enter);
+        video.addEventListener('leavepictureinpicture', leave);
+
+        async function handleToggle() {
+            try {
+                // 判断当前 PictureInPicture 是否已经开启并是否指向该 video
+                if (video !== document.pictureInPictureElement) { 
+                     // 调用 API 开启功能 
+                    await video.requestPictureInPicture().then(pictureInPictureWindow => {
+                        pictureInPictureWindow.onresize = printPipWindowDimensions;
+                    });
+                } else {
+                    await document.exitPictureInPicture() // 调用 API 关闭功能 
+                }
+                this.disabled = true // toggle 按钮避免频繁触发
+            } catch (error) {
+                // error handler 错误处理  
+            } finally {
+                this.disabled = false
+            }
+        }
+        btn.addEventListener('click', handleToggle)
+    </script>
+</body>
+</html>
