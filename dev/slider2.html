@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拼图验证</title>
+    <style>
+        .box {
+            width: 500px;
+            height: 300px;
+            background: url(./image/1.jpg) no-repeat;
+            background-size: 100% 100%;
+            position: relative;
+            margin:  auto;
+        }
+
+        .img {
+            width: 80px;
+            height: 80px;
+            background: url(./image/1.jpg) no-repeat;
+            background-size: 500px 300px;
+            background-position: -0px -110px;
+            position: absolute;
+            top: 110px;
+            left: 0px;
+            z-index: 1;
+        }
+
+        .gap {
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            position: absolute;
+            top: 110px;
+            left: 400px;
+        }
+
+        input {
+            width: 420px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="img"></div> 
+        <div class="gap"></div>
+    </div>
+    <div style="text-align: center;">
+        <input type="range" value="0" class="move">
+    </div>
+    <script>
+        var box = document.querySelector(".box");
+        var img = document.querySelector(".img");
+        var gap = document.querySelector(".gap");
+        var move = document.querySelector(".move");
+        //获取容器宽度和滑块的宽度
+        var boxWidth = box.offsetWidth;  
+        var imgWidth =  img.offsetWidth;
+        //随机生成 图片的缺口
+        var imgKou = () => {
+            //生成缺口的范围，在滑块之外，容器之内
+            var left = ~~(Math.random() * (boxWidth - 2 * imgWidth)) + imgWidth;
+            //设置缺口的位置，即设置它距离容器左侧的值
+            gap.style.left = left + "px";
+            //设置滑块背景图片位置，因为向左移动所以，应该是负数。
+            img.style.backgroundPosition = -left + "px";
+            console.log('gap.style.left', gap.style.left);
+            return left;
+        }
+        //获取当前缺口距离容器左侧的值
+        var gapLeft = parseInt(imgKou());
+        //拖动事件绑定
+        move.addEventListener('input', function (e) {
+            //根据滑动条滑动，设置滑块距离容器左侧的值
+            img.style.left = (e.target.value / 100) * (boxWidth - imgWidth) + "px";//0-500px
+            var imgLeft = parseInt(img.style.left);
+            console.log('imgLeft====', imgLeft);
+            if (Math.abs(imgLeft - gapLeft) < 5) {
+                alert("成功！");
+                //img.style.left = "0px";
+                // move.value = 0;
+            }
+        });
+
+         //因为算法存在缺陷，下面代码不会被执行，怎么能做到完全的值相等呢？所以怎么解决该问题？
+        //  if (img_left == gap_left) {
+        //             alert("成功！")
+        //         }
+
+        
+        // //刷新函数
+        // var fn1 = () => {
+        //     reset.onclick = function () {
+        //         //缺口位置重新获取，滑块位置也要定位到开头
+        //         img.style.left = "0px";
+        //         move.value = 0;
+        //         gap_left = parseInt(fn0_0());
+        //     }
+        // }
+        // fn1();
+    </script>
+</body>
+</html>
