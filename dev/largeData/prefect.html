@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.0-beta.5/vue.esm.browser.js"></script>
+        <title>完美方案</title>
+        <style>
+            .list-container {
+                height: 100%;
+                overflow: auto;
+                position: relative;
+            }
+
+            .list-all {
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                z-index: -1;
+            }
+
+            .list-view {
+                left: 0;
+                right: 0;
+                top: 0;
+                position: absolute;
+                text-align: center;
+            }
+
+            .item {
+                padding: 10px;
+                color: #555;
+                box-sizing: border-box;
+                border-bottom: 1px solid #999;
+                height: 100px;
+                line-height: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="list-container">
+            <!-- 可视区域的容器 -->
+            <div class="list-all"></div>
+            <!-- 为容器内的占位，高度为所有数据的高度，用于形成滚动条 -->
+            <div class="list-view">
+                <div class="item">item1</div>
+                <!-- 渲染区域的容器 -->
+                <!-- item-1 -->
+                <!-- item-2 -->
+                <!-- item-3 -->
+                <!-- ...... -->
+                <!-- item-n -->
+            </div>
+        </div>
+    </body>
+</html>
