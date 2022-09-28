@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网络状态</title>
+    <script src="./js/utils.js"></script>
+    <style type='text/css'>
+        * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .home {
+            text-align: center;
+        }
+        img {
+            width: 80px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <img id="img" src=''/> 
+    <script>
+        let url = 'https://positivethinking.tech/wp-content/uploads/2021/01/Vue.js-as-en-enterprise-solution-France-Belgium-Luxembourg-germany-800x533.jpg';
+        let base64 = localStorage.getItem('BASE54IMGE');
+        if (base64) {
+            document.getElementById('img').src= base64;
+        } else {
+            document.getElementById('img').src= url;
+            var canvas = document.createElement('CANVAS'),
+                ctx = canvas.getContext('2d'),
+                imgObj = new Image;
+            imgObj.crossOrigin = 'Anonymous';
+            imgObj.onload = function(){
+                canvas.height = imgObj.height;
+                canvas.width = imgObj.width;
+                ctx.drawImage(imgObj,0,0);
+                var dataURL = canvas.toDataURL('image/png');
+                localStorage.setItem('BASE54IMGE', dataURL);
+                canvas = null; 
+            };
+            imgObj.src = url;
+        }
+    </script>
+
+
+
+
+</body>
+</html>
