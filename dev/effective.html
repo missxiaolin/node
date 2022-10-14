@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网络状态</title>
+    <style type='text/css'>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .home {
+            text-align: center;
+        }
+        img {
+            width: 400px;
+            height: 500px;
+        }
+        #fast, #slow {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="home">
+        <div>网络状态判断</div>
+        <div  id="fast">
+            <!-- 1.3MB video -->
+            <video width="500px" height="500px" class="theatre" autoplay muted playsinline control>
+                <source src="./image/test.mp4" type="video/mp4">
+            </video>
+        </div>
+        <!-- 28KB image -->
+        <div id="slow">
+            <img class="theatre" src="./image//1.jpg">
+        </div>
+    </div>
+    <script>
+        let domId = "fast";
+        if (/\slow-2g|2g|3g/.test(navigator.connection.effectiveType)) {
+            domId = "slow";
+        } else {
+            domId = "fast";
+        }
+        document.getElementById(domId).style.display= 'block';
+
+        function onConnectionChange() {
+            const { rtt, downlink, effectiveType,  saveData } = navigator.connection;
+            console.log(`有效网络连接类型: ${effectiveType}`); // 2g  3g 4g 
+            console.log(`估算的下行速度/带宽: ${downlink}Mb/s`);
+            console.log(`估算的往返时间: ${rtt}ms`);
+            console.log(`打开/请求数据保护模式: ${saveData}`);
+        }
+        navigator.connection.addEventListener('change', onConnectionChange);
+
+        /*
+        
+        downlink（下行网络速度）： 以 Mbps 为单位;
+        effectiveType(连接的有效类型): “slow-2g”，“2g”，“3g” 或 “4g”。使用最近观察到的往返时间和下行链路值的组合来确定此值;
+        rtt:表示从发送端发送数据开始，到发送端收到来自接收端的确认（接收端收到数据后便立即发送确认，不包含数据传输时间）总共经历的时间;
+        saveData: 如果用户在用户代理上设置了减少数据使用量选项，则返回 true;
+        若需要监听网络信息的变化，可以通过 onchange 的方式来绑定监听函数，当网络信息发生改变时，会自动触发 change 事件，然后执行对应的监听函数。
+
+        
+        
+        */
+    </script>
+</body>
+</html>
