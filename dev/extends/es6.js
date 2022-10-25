@@ -29,7 +29,7 @@ class S extends P {
     console.log(`今年${this.age}岁`);
   }
 }
-let sub = new S("大伟聊前端", 30);
+let sub = new S("聊前端", 30);
 sub.say();
 S.type = "晚饭";
 S.sleep();

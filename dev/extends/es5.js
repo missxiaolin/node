@@ -50,7 +50,7 @@ S.prototype.say = function () {
   console.log(`今年${this.age}岁`);
 };
 
-let s1 = new S("大伟聊前端", 30);
+let s1 = new S("聊前端", 30);
 s1.say();
 
 // 继承静态属性
@@ -58,7 +58,7 @@ Object.keys(P).forEach((prop) => {
   S[prop] = P[prop];
 });
 
-let s2 = new S("大伟聊前端", 30);
+let s2 = new S("聊前端", 30);
 s2.say();
 S.type = "晚饭";
 S.sleep();
