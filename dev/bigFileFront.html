@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>并发限制的处理</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // 串行执行  串行会从上到下依次执行对应接口请求。
+      // var p = function () {
+      //     return new Promise(function (resolve, reject) {
+      //         setTimeout(() => {
+      //             console.log("1000");
+      //             resolve();
+      //         }, 1000);
+      //     });
+      // };
+      // var p1 = function () {
+      //     return new Promise(function (resolve, reject) {
+      //         setTimeout(() => {
+      //             console.log("2000");
+      //             resolve();
+      //         }, 2000);
+      //     });
+      // };
+      // var p2 = function () {
+      //     return new Promise(function (resolve, reject) {
+      //         setTimeout(() => {
+      //             console.log("3000");
+      //             resolve();
+      //         }, 3000);
+      //     });
+      // };
+
+      // p().then(() => {
+      //     return p1();
+      // }).then(() => {
+      //     return p2();
+      // }).then(() => {
+      //     console.log("end");
+      // });
+
+      /*
+    并行
+    通常，我们在需要保证代码在多个异步处理之后执行，会用到：
+    Promise.all((promises: [])).then((fun: function));
+    Promise.all可以保证，promises数组中所有promise对象都达到resolve状态，才执行then回调。
+*/
+
+      // var promises = function () {
+      //     return [1000, 2000, 3000].map((current) => {
+      //         return new Promise(function (resolve, reject) {
+      //             setTimeout(() => {
+      //                 console.log(current);
+      //             }, current);
+      //         });
+      //     });
+      // };
+
+      // Promise.all(promises()).then(() => {
+      //     console.log("end");
+      // });
+
+      /*
+
+        Promise.all 并发限制
+        这时候考虑一个场景：如果你的promises数组中每个对象都是http请求，而这样的对象有几十万个。
+        在瞬间发出几十万个http请求，这样很有可能导致堆积了无数调用栈导致内存溢出。
+        我们就需要考虑对Promise.all做并发限制。
+        Promise.all并发限制指的是，每个时刻并发执行的promise数量是固定的，最终的执行结果还是保持与原来的Promise.all一致。
+
+
+    */
+
+      /*
+    
+    思路分析
+    整体采用递归调用来实现：最初发送的请求数量上限为允许的最大值，并且这些请求中的每一个都应该在完成时继续递归发送，
+    通过传入的索引来确定了urls里面具体是那个URL，保证最后输出的顺序不会乱，而是依次输出。
+
+    */
+
+      function multiRequest(urls, maxNum) {
+        //[ajax ] // 3
+        let urlsClone = [...urls];
+        let result = new Array(urls.length);
+        let isDoneArr = new Array(urls.length).fill(0); // 用于判断请求是否全部完成
+
+        let queueLimit = Math.min(maxNum, urls.length); // 计算最大的限制数目
+        let queue = [];
+        /* 初始化队列请求, 在此处限制队列长度 */
+        while (enqueue(queue, urls.shift()) < queueLimit) {}
+        let promise = {
+          resolve: "",
+          reject: "",
+        };
+        function request(queue, url) {
+          // 模拟请求
+          console.log("开始任务 start:", url);
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              console.log("完成任务 done:", url);
+              /* 保证result, state 结果和 urls 顺序相同 */
+              let i = urlsClone.indexOf(url);
+              result[i] = url;
+              isDoneArr[i] = 1;
+              /*执行完一个请求后, 执行出队操作 */
+              dequeue(queue, url);
+              resolve();
+            }, 1000 * Math.floor(Math.random() * 5 + 1));
+          });
+        }
+
+        function dequeue(queue = [], url) {
+          /* 一个请求完成, 出队, 下一个入队(如果有的话) */
+          queue.splice(queue.indexOf(url), 1); // 从queue中移除已经完成的ajax
+          if (urls.length) {
+            enqueue(queue, urls.shift());
+          } else {
+            /* 判断所有请求完成, 再 resolve */
+            if (isDoneArr.indexOf(0) === -1) {
+              promise.resolve(result);
+            }
+          }
+        }
+
+        function enqueue(queue = [], url) {
+          /* 请求入队, 并触发数据请求, 返回队列长度 */
+          let len = queue.push(url);
+          request(queue, url);
+          return len;
+        }
+
+        // 上面的需要先执行万
+
+        return new Promise((resolve, reject) => {
+          return (promise.resolve = resolve);
+        });
+      }
+
+      let logs = "answerTime";
+      console.time(logs);
+      multiRequest([1, 2, 3, 4, 5, 6, 7, 8, 9], 3).then((res) => {
+        console.timeLog(logs);
+        console.log("result", res);
+      });
+    </script>
+  </body>
+</html>
