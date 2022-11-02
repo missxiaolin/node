@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --text-color: #222;
+            --link-color: #0033cc;
+        }
+
+        body {
+            color: var(--text-color);
+            background: var(--bg);
+            text-align: center;
+        }
+        body a {
+            color: var(--link-color);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #121212;
+                --text-color: #eee;
+                --link-color: #f45804;
+            }
+        }
+    </style>
+</head>
+    <body>
+        <h1>这里是标题</h1>
+        <p>这里是内容。 测试的内容</p>
+        <a href="#">一个超链接</a>
+    </body>
+</html>
