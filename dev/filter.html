@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证码输入框</title>
+    <style>
+        body{
+            height: 100vh;
+            background: #188257;
+        }
+        .box {
+            width: 340px;
+            margin: 0 auto;
+        }
+        .input-list {
+            display: flex;
+            justify-content: space-between;
+        }
+        .input-item {
+            box-sizing: border-box;
+            width: 50px;
+            height: 50px;
+            line-height: 48px;
+            font-size: 24px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .input-item-focus {
+            border-color: red;
+        }
+        .input-item-focus::before {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 30px;
+            margin: 10px auto;
+            background: rgb(27, 8, 230);
+        }
+        .input {
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: calc(100% + 40px);
+            height: 50px;
+            padding: 0;
+            border: none;
+            outline: none;
+            opacity: 0;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="input-list">
+            <div class="input-item"></div>
+            <div class="input-item"></div>
+            <div class="input-item"></div>
+            <div class="input-item"></div>
+            <div class="input-item"></div>
+            <div class="input-item"></div>
+        </div>
+        <input class="input" type="number" maxlength="6">
+    </div>
+    <script>
+         // 获取dom
+        const inputList = document.querySelectorAll('.input-item');
+        const numberInput = document.querySelector('.input');
+        // focus
+        numberInput.addEventListener('focus', function (e) {
+                focusPosition();
+        });
+
+        // blur
+        numberInput.addEventListener('blur', function (e) {
+            removeCursor();
+        });
+        //input输入事件
+        numberInput.addEventListener('input', function (e) {
+            const value = e.target.value;
+            for (let i = 0; i < 6; i++) {
+                inputList[i].innerHTML = value[i] || '';
+            }
+            // 移除旧光标
+            removeCursor();
+
+            // 计算新光标出现位置
+            focusPosition();
+        });
+
+        // 计算光标出现位置
+        function focusPosition() {
+            const length = numberInput.value.length;
+            if (length < 6) {
+                // 设置光标的样式
+                inputList[length].classList.add('input-item-focus');
+            }
+        }
+        // 移除光标
+        function removeCursor() {
+            // 最后一位没有光标
+            document.querySelector('.input-item-focus')?.classList.remove('input-item-focus');
+        }
+    </script>
+</body>
+</html>
