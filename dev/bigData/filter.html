@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+      img {
+        width: 200px;
+      }
+      .img1 {
+        filter: none;
+      }
+      .img2 {
+        /*调整元素的对比度*/
+
+        filter: contrast(30);
+      }
+      .img3 {
+        filter: brightness(20%);
+      }
+      .img4 {
+        filter: brightness(400%);
+      }
+      .img5 {
+        filter: sepia(1) contrast(2) brightness(200%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo">
+      <img src="../image/1.jpg" class="img1" />
+      <img src="../image/1.jpg" class="img2" />
+      <img src="../image/1.jpg" class="img3" />
+      <img src="../image/1.jpg" class="img4" />
+      <img src="../image/1.jpg" class="img5" />
+    </div>
+  </body>
+</html>
+
+<!-- Filter 函数
+
+注意： 滤镜通常使用百分比 (如：75%), 当然也可以使用小数来表示 (如：0.75)。
+
+none：这是默认值，不适用任何效果。
+
+brightness()：设置元素的亮度。如果亮度为0％则为全黑，如果亮度为100％，则与原始亮度相同。大于100％结果的值是更明亮的元素。
+
+grayscale()：设置元素的灰度，它将元素颜色转换为黑色和白色。灰度0％表示原始元素，100％表示完全灰度元素。
+
+sepia()：它将图像转换为棕褐色图像，其中0％表示原始图像，100％表示完全棕褐色。
+
+contrast()：用于调整元素的对比度。0％对比度表示完整的黑色元素，100％对比度表示原始元素。
+
+saturate()：用于设置元素的饱和度。0％饱和度表示元素完全不饱和，100％饱和表示原始图像。大于100％结果的值是超饱和元素。
+
+blur()：它将模糊效果应用于元素。如果未指定模糊值，则默认值为0。
+
+opacity()：它设置图像的不透明度效果。0％不透明度表示元素完全透明，如果不透明度为100％，则表示原始图像。
+
+hue-rotate()：它将色调旋转应用于图像。该值定义将调整图像样本的色环周围的度数。默认值为0deg，表示原始图像；该值虽然没有最大值，超过360deg的值相当于又绕一圈。
+
+invert()：它反转元素。默认值为0％，表示原始图像。100％使图像完全反转。
+
+drop-shadow()：它对元素应用阴影效果。它接受h-shadow，v-shadow，blur，spread和color作为值。
+
+url()：接受一个XML文件，该文件设置了 一个SVG滤镜，且可以包含一个锚点来指定一个具体的滤镜元素。
+ -->
