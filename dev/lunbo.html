@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>轮播高度自适应</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 567px;
+      overflow: hidden;
+    }
+    .wrapper {
+      width: 100%;
+    }
+    .swiper {
+      font-size: 0;
+      white-space: nowrap;
+    }
+    .item {
+      display: inline-block;
+      width: 100%;
+      vertical-align: top;
+    }
+    .item:first-child {
+      height: 160px;
+      background-color: aqua;
+    }
+    .item:nth-child(2) {
+      height: 100px;
+      background-color: bisque;
+    }
+    .item:last-child {
+      height: 200px;
+      background-color: cadetblue;
+    }
+    .item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .content {
+      position: relative;
+      z-index: 9;
+      font-size: 14px;
+      text-align: center;
+      padding-top: 20px;
+      background-color: #fff;
+      height: 200px;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="swiper">
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+        </div>
+      </div>
+      <div class="content">这是一段内容</div>
+    </div>
+    <script>
+      const data = {
+        ele: null,
+        width: 0,
+        len: 0,
+        proportion: 0.3,
+        type: false,
+        heights: [160, 100, 200],
+        currentIndex: 0,
+        startOffset: 0,
+        clientX: 0,
+        distanceX: 0,
+        duration: 30,
+        touching: false,
+      };
+
+      const wrapper = (data.ele = document.querySelector(".wrapper"));
+      const items = document.querySelectorAll(".item");
+      data.width = wrapper.offsetWidth;
+      data.len = items.length - 1;
+      wrapper.addEventListener("touchstart", onStart);
+      wrapper.addEventListener("mousedown", onStart);
+
+      function onStart(event) {
+        if (event.type === "mousedown" && event.which !== 1) return;
+        if (event.type === "touchstart" && event.touches.length > 1) return;
+        data.type = event.type === "touchstart";
+        const events = data.type ? event.touches[0] || event : event;
+
+        data.touching = true;
+        data.clientX = events.clientX;
+        data.startOffset = data.currentIndex * -data.width;
+
+        data.ele.style.transition = "none";
+        window.addEventListener(data.type ? "touchmove" : "mousemove", onMove, {
+          passive: false,
+        });
+        window.addEventListener(
+          data.type ? "touchend" : "mouseup",
+          onEnd,
+          false
+        );
+      }
+
+      function onMove(event) {
+        event.preventDefault();
+        if (!data.touching) return;
+        const events = data.type ? event.touches[0] || event : event;
+        const index = data.currentIndex;
+        const currentHeight = data.heights[index];
+        let flag = false;
+
+        data.distanceX = events.clientX - data.clientX;
+
+        let translatex = data.startOffset + data.distanceX;
+        if (translatex > 0) {
+          if (translatex > 30) {
+            translatex = 30;
+            flag = true;
+          } else {
+            flag = false;
+          }
+        } else {
+          const d = -(data.len * data.width + 30);
+          if (translatex < d) {
+            translatex = d;
+            flag = true;
+          } else {
+            flag = false;
+          }
+        }
+        let nextHeight =
+          data.distanceX > 0
+            ? data.heights[index - 1]
+            : data.heights[index + 1];
+        let diffHeight = Math.abs(
+          (nextHeight - currentHeight) * (data.distanceX / data.width)
+        );
+        let realHeight =
+          currentHeight +
+          (nextHeight - currentHeight > 0 ? diffHeight : -diffHeight);
+
+        if (!flag) {
+          data.ele.style.height = `${realHeight}px`;
+        }
+
+        data.ele.style.transform = `translate3d(${translatex}px, 0, 0)`;
+        data.ele.style.webkitTransform = `translate3d(${translatex}px, 0, 0)`;
+      }
+      function onEnd() {
+        if (!data.touching) return;
+        data.touching = false;
+
+        if (Math.abs(data.distanceX) > data.width * data.proportion) {
+          data.currentIndex -= data.distanceX / Math.abs(data.distanceX);
+        }
+        if (data.currentIndex < 0) {
+          data.currentIndex = 0;
+        } else if (data.currentIndex > data.len) {
+          data.currentIndex = data.len;
+        }
+        const translatex = data.currentIndex * -data.width;
+        const currentHeight = data.heights[data.currentIndex];
+
+        data.ele.style.transition = "all .3s ease";
+        data.ele.style.height = `${currentHeight}px`;
+        data.ele.style.transform = `translate3d(${translatex}px, 0, 0)`;
+        data.ele.style.webkitTransform = `translate3d(${translatex}px, 0, 0)`;
+
+        window.removeEventListener(
+          data.type ? "touchmove" : "mousemove",
+          onMove,
+          { passive: false }
+        );
+        window.removeEventListener(
+          data.type ? "touchend" : "mouseup",
+          onEnd,
+          false
+        );
+      }
+    </script>
+  </body>
+</html>
