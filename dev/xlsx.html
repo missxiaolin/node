@@ -14,8 +14,10 @@
     </style>
 </head>
 <body>
-    <div id="container"></div>
+    <div class="container" id="container"></div>
+    
     <button id="btn">获取内容</button>
+    <button id="btnImg">上传图片</button>
     <script>
         var sheet = [['1', '张三', '男', 82], ['2', '李四', '女', 89], ['3', '王麻子', '男', 70]];
         var ws = XLSX.utils.aoa_to_sheet(sheet);
@@ -23,11 +25,20 @@
         document.getElementById("container").innerHTML = html_string;
         var btn = document.getElementById("btn")
         btn.addEventListener("click", function(e) {
-            console.log(XLSX.utils.sheet_to_json('#container'))
+            var table1 = document.querySelector("#data-table");
+            var sheet = XLSX.utils.table_to_sheet(table1);//将一个table对象转换成一个sheet对象
+            console.log(sheet)
+            // console.log(XLSX.utils.table_to_sheet('container'))
         })
-        // btn.click(e) {
-        //     alert(1)
-        // }
+        var btnImg = document.getElementById("btnImg")
+        btnImg.addEventListener("click", function(e) {
+            var D1 = document.getElementById("data-table-D1")
+            var img  = document.createElement("img")
+            img.src = 'https://img1.baidu.com/it/u=413643897,2296924942&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'
+            var span = D1.getElementsByTagName('span')[0]
+            span.appendChild(img)
+            // D1.appendChild(img)
+        })
     </script>
 </body>
 </html>
