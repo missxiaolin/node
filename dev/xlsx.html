@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>html表格编辑示例</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.core.min.js"></script>
+    <style>
+        table td {
+            width: 80px;
+            text-align: center;
+            border: 1px solid #aaa;
+        }
+        span {padding: 0 10px;}
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <button id="btn">获取内容</button>
+    <script>
+        var sheet = [['1', '张三', '男', 82], ['2', '李四', '女', 89], ['3', '王麻子', '男', 70]];
+        var ws = XLSX.utils.aoa_to_sheet(sheet);
+        var html_string = XLSX.utils.sheet_to_html(ws, { id: "data-table", editable: true });
+        document.getElementById("container").innerHTML = html_string;
+        var btn = document.getElementById("btn")
+        btn.addEventListener("click", function(e) {
+            console.log(XLSX.utils.sheet_to_json('#container'))
+        })
+        // btn.click(e) {
+        //     alert(1)
+        // }
+    </script>
+</body>
+</html>
