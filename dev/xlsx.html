@@ -42,7 +42,7 @@
         var table1 = document.querySelector("#data-table");
         var sheet = XLSX.utils.table_to_sheet(table1); //将一个table对象转换成一个sheet对象
         console.log(sheet);
-        // console.log(XLSX.utils.table_to_sheet('container'))
+        console.log(XLSX.utils.sheet_to_json(sheet, { header: 1 }));
       });
       var btnImg = document.getElementById("btnImg");
       btnImg.addEventListener("click", function (e) {
