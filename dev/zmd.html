@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body style="overflow-x: hidden">
+    <!--上下方向图片-->
+    <!-- <div
+      class="partPiiic"
+      style="
+        position: absolute;
+        width: 3.75rem;
+        height: 3.75rem;
+        top: 0rem;
+        left: 0rem;
+        overflow: hidden;
+      "
+      slidespeed="10"
+    >
+      <div
+        class="piiic_region"
+        slidedirection="UD"
+        slidespeed="10"
+        style="position: relative; width: 100%"
+      >
+        <div class="piiic_item" style="position: relative; width: 100%">
+          < img style="width:100%;display:block;" src="test.jpg">
+        </div>
+      </div>
+    </div> -->
+    <!--左右方向-->
+    <div
+      class="partPiiic"
+      style="
+        position: absolute;
+        width: 100%;
+        height: 1.81rem;
+        top: 3.88rem;
+        left: 0rem;
+        overflow: hidden;
+      "
+      slidespeed="10"
+    >
+      <div
+        class="piiic_region"
+        slidedirection="LR"
+        slidespeed="10"
+        style="display: flex; position: relative; height: 100%"
+      >
+        <div class="piiic_item" style="position: relative; height: 100%">
+          <div
+            class="c1"
+            style="
+              width: 50px;
+              height: 100px;
+              background: red;
+              margin-right: 10px;
+            "
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.onload = function () {
+        //初始化图片走马灯
+        longPicInit();
+      };
+      function longPicInit() {
+        var container = document.querySelector("body");
+        var partPiiicList = container.querySelectorAll(".partPiiic");
+        if (partPiiicList.length > 0) {
+          for (var index = 0; index < partPiiicList.length; index++) {
+            var partPiiicNode = partPiiicList[index];
+            //存在其他业务逻辑，删除后只保留走马灯逻辑
+            //根据你自己的实际情况，获取到所有走马灯元素即可
+            //执行循环动画
+            loopLongPic(partPiiicNode);
+          }
+        }
+      }
+      //主方法
+      function loopLongPic(partPiiicNode) {
+        //timeflag标志位 offspeed走马灯每次移动距离 copynum需要复制的子元素数量
+        var timeFlag = 1,
+          offSpeed = 1,
+          copyNum = 1,
+          picTimer;
+        var piiic_region = partPiiicNode.querySelector(".piiic_region");
+        var speed = piiic_region.getAttribute("slidespeed"); //走马灯速度
+        var deraction = piiic_region.getAttribute("slidedirection"); //走马灯方向 上下还是左右
+        var piiic_item = piiic_region.querySelector(".piiic_item"); //走马灯元素
+        if (deraction == "LR") {
+          //根据视图宽度除子元素宽度计算需要复制几个子元素
+          copyNum = Math.ceil(
+            partPiiicNode.offsetWidth / piiic_item.offsetWidth
+          );
+          var text = $(piiic_region).html();
+          for (var i = 0; i < copyNum; i++) {
+            //复制后追加
+            $(piiic_region).append(text);
+          }
+          piiic_region.style.width =
+            piiic_item.offsetWidth * (copyNum + 1) + "px";
+        } else {
+          //上下方向上的复制，逻辑同理
+          copyNum = Math.ceil(
+            partPiiicNode.offsetHeight / piiic_item.offsetHeight
+          );
+          var text = $(piiic_region).html();
+          for (var i = 0; i < copyNum; i++) {
+            $(piiic_region).append(text);
+          }
+          piiic_region.style.height =
+            piiic_item.offsetHeight * (copyNum + 1) + "px";
+        } //复制后，开启跑马灯
+        picTimer = setInterval(LoopMove, speed);
+        function LoopMove() {
+          if (timeFlag == 0) {
+            clearInterval(picTimer);
+            picTimer = null;
+            return false;
+          }
+          if (deraction == "LR") {
+            //边界处理函数，到头拉回
+            criticalX();
+            piiic_region.style.left = piiic_region.offsetLeft - offSpeed + "px";
+          }
+          if (deraction == "UD") {
+            criticalY();
+            piiic_region.style.top = piiic_region.offsetTop - offSpeed + "px";
+          }
+        } //添加touch事件
+        var touchStartX = 0,
+          touchStartY = 0,
+          moveStartY = 0,
+          starttime = 0,
+          restart,
+          animateMoveTimer;
+        piiic_region.addEventListener("touchstart", function (e) {
+          if (picTimer) {
+            clearInterval(picTimer);
+            picTimer = null;
+          }
+          if (restart) {
+            clearTimeout(restart);
+            restart = null;
+          }
+          if (animateMoveTimer) {
+            clearInterval(animateMoveTimer);
+          }
+          timeFlag = 0;
+          //暂停定时器 手动拖拽上下左右距离
+          var ev = e || window.event;
+          var touch = ev.targetTouches[0]; //记录touch初始位置
+          touchStartX = touch.pageX;
+          touchStartY = touch.pageY; //记录元素初始位置
+          moveStartX = piiic_region.offsetLeft;
+          moveStartY = piiic_region.offsetTop;
+          starttime = Date.now();
+          piiic_region.addEventListener("touchmove", preventDefault, false);
+        });
+        function preventDefault(e) {
+            console.log(e)
+            // clearInterval(picTimer);
+        }
+        piiic_region.addEventListener("touchmove", picImgMove);
+        function picImgMove(e) {
+          timeFlag = 0;
+          if (timeFlag == 0) {
+            var ev = e || window.event;
+            var touch = ev.targetTouches[0];
+            if (deraction == "LR") {
+              //左右移动               //根据当前位置-初始位置计算手指移动距离 改变元素left
+              var moveX = touch.pageX - touchStartX;
+              piiic_region.style.left = moveStartX + moveX + "px";
+              criticalX();
+            }
+            if (deraction == "UD") {
+              //上下移动
+              var moveY = touch.pageY - touchStartY;
+              piiic_region.style.top = moveStartY + moveY + "px";
+              criticalY();
+            }
+          }
+        }
+        piiic_region.addEventListener("touchend", function (e) {
+          piiic_region.removeEventListener("touchmove", preventDefault);
+          //获取最总结束位置
+          var ev = e || window.event;
+          var touch = ev.changedTouches[0];
+          var time = Date.now() - starttime; //获取手指滑动速度 设置参数 可以根据自己想要的效果设置不同值
+          var endeSpeed = 0,
+            rationSpeed = 40;
+          //执行惯性移动
+          if (deraction == "LR") {
+            var distanceX = touch.pageX - touchStartX;
+            endeSpeed = (distanceX / time) * rationSpeed;
+            animateMove(endeSpeed);
+          }
+          if (deraction == "UD") {
+            var distanceY = touch.pageY - touchStartY;
+            endeSpeed = (distanceY / time) * rationSpeed;
+            animateMove(endeSpeed);
+          }
+        });
+        function animateMove(endeSpeed) {
+          if (animateMoveTimer) {
+            clearInterval(animateMoveTimer);
+          }
+          //endeSpeed是结束时的初速度,a为加速度,每隔1ms速度递减执行当前速度*1ms时间的距离,如果速度接近0,则清除计时器
+          var a = endeSpeed < 0 ? 2 : -2;
+          animateMoveTimer = setInterval(function () {
+            if (Math.abs(endeSpeed) < 1) {
+              clearInterval(animateMoveTimer);
+              if (picTimer) {
+                clearInterval(picTimer);
+                picTimer = null;
+              }
+              if (restart) {
+                clearTimeout(restart);
+                restart = null;
+              }
+              restart = setTimeout(function () {
+                timeFlag = 1;
+                picTimer = setInterval(LoopMove, speed);
+              }, 10);
+              return;
+            }
+            endeSpeed += a;
+            if (deraction == "LR") {
+              piiic_region.style.left =
+                piiic_region.offsetLeft + endeSpeed + "px";
+              criticalX();
+            }
+            if (deraction == "UD") {
+              piiic_region.style.top =
+                piiic_region.offsetTop + endeSpeed + "px";
+              criticalY();
+            }
+          }, 1);
+        }
+        //边界处理函数
+        function criticalX() {
+          if (
+            piiic_region.offsetLeft <
+            -piiic_region.offsetWidth / (copyNum + 1)
+          ) {
+            //拖到最右边 循环
+            piiic_region.style.left = 0;
+          } else if (piiic_region.offsetLeft >= 0) {
+            //拖到最左边 循环
+            piiic_region.style.left =
+              -piiic_region.offsetWidth / (copyNum + 1) + "px";
+          }
+        }
+        function criticalY() {
+          if (
+            piiic_region.offsetTop <
+            -piiic_region.offsetHeight / (copyNum + 1)
+          ) {
+            piiic_region.style.top = 0;
+          } else if (piiic_region.offsetTop >= 0) {
+            piiic_region.style.top =
+              -piiic_region.offsetHeight / (copyNum + 1) + "px";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
