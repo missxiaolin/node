@@ -1,103 +1,39 @@
+const fsEditor = require('mem-fs-editor');
 const postcss = require('postcss');
+const postcssImport = require('postcss-import');
 
-// 样式字符串1
-const css1 = `
-.my-class {
-    font-size: 16px;
-    color: blue !important;
-}
-`;
+// 创建内存文件系统
+const memFs = fsEditor.create();
 
-// 样式字符串2
-const css2 = `
-.my-class {
-    font-size: 18px;
-    color: red;
-    background-color: yellow;
-}
-`;
+// 在内存中创建两个CSS文件
+memFs.write('file1.css', `.class1 { color: red; }`);
+memFs.write('file2.css', `.class2 { background-color: blue; }`);
 
-// 创建一个 PostCSS 插件
-const mergeStylesPlugin = postcss.plugin('merge-styles', () => {
-    return (root) => {
-        const mergedRules = {};
+// 创建一个读取内存文件的虚拟文件系统
+const virtualFs = require('fs').createReadStream.bind(fs, '/dev/null');
+virtualFs.stat = require('fs').statSync.bind(fs, '/dev/null');
 
-        root.walkRules((rule) => {
-            const selector = rule.selector;
-            const declarations = rule.nodes;
-
-            if (mergedRules[selector]) {
-                declarations.forEach((declaration) => {
-                    const property = declaration.prop;
-                    const value = declaration.value;
-                    const important = declaration.important;
-
-                    if (mergedRules[selector][property]) {
-                        // Check if the property value is important and update accordingly
-                        if (important || !mergedRules[selector][property].important) {
-                            mergedRules[selector][property] = {
-                                value: value,
-                                important: important
-                            };
-                        } else {
-                            const existingValue = mergedRules[selector][property].value;
-                            const newValue = value;
-
-                            if (existingValue !== newValue) {
-                                // Compare and update if new value is greater
-                                if (parseInt(newValue, 10) > parseInt(existingValue, 10)) {
-                                    mergedRules[selector][property] = {
-                                        value: value,
-                                        important: important
-                                    };
-                                }
-                            }
-                        }
-                    } else {
-                        mergedRules[selector][property] = {
-                            value: value,
-                            important: important
-                        };
-                    }
-                });
-            } else {
-                mergedRules[selector] = {};
-                declarations.forEach((declaration) => {
-                    const property = declaration.prop;
-                    const value = declaration.value;
-                    const important = declaration.important;
-                    mergedRules[selector][property] = {
-                        value: value,
-                        important: important
-                    };
-                });
-            }
-        });
-
-        root.removeAll();
-
-        Object.keys(mergedRules).forEach((selector) => {
-            const rule = postcss.rule({ selector: selector });
-
-            Object.keys(mergedRules[selector]).forEach((property) => {
-                const { value, important } = mergedRules[selector][property];
-                const declaration = postcss.decl({ prop: property, value: value });
-
-                if (important) {
-                    declaration.important = true;
-                }
-
-                rule.append(declaration);
-            });
-
-            root.append(rule);
-        });
-    };
+// 使用postcss-import处理内存中的CSS文件
+const result = await postcss([
+  postcssImport({
+    resolve: (id, basedir) => {
+      // 由于我们使用的是内存文件系统，这里返回文件名即可
+      return id;
+    },
+    load: (id) => {
+      // 从内存中读取CSS文件内容
+      return memFs.read(id, 'utf8');
+    },
+  }),
+])
+.process('@import "file1.css";\n@import "file2.css";', {
+  from: undefined,
+  map: false,
+  parser: require('postcss-safe-parser'),
+  sourceMap: false,
+  // 提供虚拟文件系统
+  customFs: virtualFs,
 });
 
-// 使用 PostCSS 处理合并样式
-postcss([mergeStylesPlugin])
-    .process(css1 + css2)
-    .then(result => {
-        console.log(result.css);
-    });
+// 输出合并后的CSS
+console.log(result.css);
