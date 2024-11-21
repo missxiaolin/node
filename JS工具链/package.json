@@ -9,8 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/generator": "^7.26.2",
+    "@babel/parser": "^7.26.2",
+    "@babel/traverse": "^7.25.9",
+    "@vue/compiler-dom": "^3.5.13",
+    "ast-traverse": "^0.1.1",
     "core-js": "^3.32.2",
-    "regenerator": "^0.14.10"
+    "regenerator": "^0.14.10",
+    "vue-template-compiler": "^2.7.16"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.15",
