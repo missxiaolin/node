@@ -1,0 +1,12 @@
+{
+  "name": "lowcode-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": ""
+  },
+  "keywords": [],
+  "author": "Heyi",
+  "license": "ISC",
+  "description": ""
+}
