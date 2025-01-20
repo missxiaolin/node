@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag and Drop Example</title>
+    <style>
+      .container {
+        width: 300px;
+        height: 300px;
+        border: 1px solid black;
+        position: relative;
+        overflow: hidden;
+      }
+      .a {
+        width: 50px;
+        height: 50px;
+        background-color: lightblue;
+        position: absolute;
+        cursor: move;
+        transition: transform 0.1s ease;
+      }
+      .a.dragging {
+        opacity: 0.7;
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="a" draggable="true" style="top: 10px; left: 10px"></div>
+      <div class="a" draggable="true" style="top: 10px; left: 70px"></div>
+      <div class="a" draggable="true" style="top: 70px; left: 10px"></div>
+      <div class="a" draggable="true" style="top: 70px; left: 70px"></div>
+    </div>
+
+    <script>
+      const container = document.querySelector(".container");
+      const draggableElements = document.querySelectorAll(".a");
+
+      draggableElements.forEach((element) => {
+        element.addEventListener("dragstart", dragStart);
+        element.addEventListener("dragend", dragEnd);
+      });
+
+      container.addEventListener("dragover", dragOver);
+      container.addEventListener("drop", drop);
+
+      let draggedElement = null;
+
+      function dragStart(e) {
+        draggedElement = e.target;
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/html", e.target.outerHTML);
+        draggedElement.classList.add("dragging");
+      }
+
+      function dragEnd(e) {
+        draggedElement.classList.remove("dragging");
+        draggedElement = null;
+      }
+
+      function dragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+      }
+
+      function drop(e) {
+        e.preventDefault();
+        if (draggedElement && container.contains(draggedElement)) {
+          const rect = container.getBoundingClientRect();
+          const x = e.clientX - rect.left - draggedElement.offsetWidth / 2;
+          const y = e.clientY - rect.top - draggedElement.offsetHeight / 2;
+          const maxX = container.offsetWidth - draggedElement.offsetWidth;
+          const maxY = container.offsetHeight - draggedElement.offsetHeight;
+
+          let newTop = Math.max(0, y);
+          let newLeft = Math.max(0, Math.min(maxX, x));
+
+          // Check if the element is dragged outside the container
+          if (y > maxY) {
+            newTop = maxY;
+            const overflowY = y - maxY;
+            container.style.minHeight = `${
+              container.offsetHeight + overflowY
+            }px`;
+          }
+
+          draggedElement.style.left = `${newLeft}px`;
+          draggedElement.style.top = `${newTop}px`;
+        }
+      }
+    </script>
+  </body>
+</html>
